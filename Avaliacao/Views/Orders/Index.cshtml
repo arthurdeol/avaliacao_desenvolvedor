@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Upload de Pedidos";
+}
+
+
+<h1>Upload de Pedidos</h1>
+
+<form method="post" action="/Orders/GetFile" enctype="multipart/form-data">
+    <input type="file" name="dados" /> <br />
+    <input type="submit" value="Importar" />
+</form>
+@if (TempData["$AlertMessage$"] != null)
+{
+    <div class="alerta" style="color:red">@TempData["$AlertMessage$"]</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Comprador</th>
+            <th>Descrição</th>
+            <th>Preço Unitário</th>
+            <th>Quantidade</th>
+            <th>Endereço</th>
+            <th>Fornecedor</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.Purchaser</th>
+                    <th>@item.Description</th>
+                    <th>R$@item.Price</th>
+                    <th>@item.Quantity</th>
+                    <th>@item.Address</th>
+                    <th>@item.Provider</th>
+                </tr>
+
+            }
+        }
+
+    </tbody>
+</table>
+@if (Model.Count() == 0)
+{
+    <div style="color:red">Importe um arquivo para preencher a tabela</div>
+}
+    <div>@TempData["Somatoria"]</div>
